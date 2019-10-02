@@ -16,7 +16,7 @@ function App() {
       
        
       </header>
-      <div style={{padding:50+'px', background:'grey'}}>
+      <div style={{padding:50+'px', background:'grey', height:100+'vh'}}>
         <div className="container-fluid">
         <Article/>
         </div>

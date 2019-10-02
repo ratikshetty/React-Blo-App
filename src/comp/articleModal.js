@@ -13,13 +13,17 @@ class articleModal extends Component {
         this.state = {
             showEdit: false,
             ele: {'title': 'test'},
+            updateDisabled: true,
+            editDisable: false,
 
         };
     }
 
     update(){
         this.setState({
-            showEdit: true,
+            showEdit: !this.state.showEdit,
+            updateDisabled: !this.state.updateDisabled,
+            editDisable: !this.state.editDisable,
         })
 
         // if(document.getElementById('content') !== null){
@@ -47,18 +51,21 @@ class articleModal extends Component {
 
                     <div className="row p-1">
                         <div className="col-md-6 text-left">
-                            <p>Author: {this.props.element.author}</p>
+                            <p><strong>Author:</strong> {this.props.element.author}</p>
                         </div>
                         <div className="col-md-6 text-right">
-                            <p>Last Modified: {this.props.element.modifiedDate}</p>
+                            <p><strong>Last Modified:</strong> {this.props.element.modifiedDate}</p>
                         </div>
 
                     </div>
                     {this.state.showEdit ?
                     <div className="row p-1" >
-                        
+                        <div className="col-md-2">
+                        <p> <strong>Content:</strong></p>
+                        </div>
                         <div className="col-md-8">
-                          <input type="text" id="content" value={this.props.content}></input>
+                           
+                          <input type="text" id="content" ></input>
                         </div>
 
                     </div> : null }
@@ -66,10 +73,11 @@ class articleModal extends Component {
 
                 <Modal.Footer>
                     <Button variant="secondary" onClick={this.props.exit}>Close</Button>
-                    <Button variant="primary"  onClick={() => {
+                    <Button variant="primary" disabled={this.state.updateDisabled}  onClick={() => {
                         this.props.update(this.props.element.title, document.getElementById('content').value)
+                        this.update()
                     }}>update</Button>
-                    <Button variant="primary" onClick={this.update.bind(this)}>edit</Button>
+                    <Button variant="primary" disabled={this.state.editDisable}  onClick={this.update.bind(this)}>edit</Button>
                 </Modal.Footer>
             </Modal>
         );
