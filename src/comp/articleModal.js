@@ -78,6 +78,8 @@ class articleModal extends Component {
                         this.update()
                     }}>update</Button>
                     <Button variant="primary" disabled={this.state.editDisable}  onClick={this.update.bind(this)}>edit</Button>
+                    <Button variant="danger" onClick={() => {
+                        this.props.delete(this.props.element.title)}}>Delete</Button>
                 </Modal.Footer>
             </Modal>
         );

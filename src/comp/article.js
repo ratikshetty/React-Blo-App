@@ -105,6 +105,27 @@ class article extends Component {
         
     }
 
+    deleteBlogPost(title) {
+
+        fetch('http://127.0.0.1:5000/delete', {
+            method: 'DELETE',
+            body: JSON.stringify({
+                "title": title,
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }
+        ).then(res => {
+            
+
+            alert('Article Deleted!!!')
+            this.close()
+        }).catch(err => err);
+        
+    }
+
     render() {
 
 
@@ -125,6 +146,7 @@ class article extends Component {
                         element={this.state.modalEle}
                         exit={this.close.bind(this)}
                         update={this.updateBlogPost.bind(this)}
+                        delete = {this.deleteBlogPost.bind(this)}
                     />
 
                     {/* Create New Blog Modal */}
