@@ -100,8 +100,9 @@ class article extends Component {
             
 
             alert('Article created!!!')
+            this.close()
         }).catch(err => err);
-
+        
     }
 
     render() {
@@ -130,7 +131,7 @@ class article extends Component {
                     <NewArticleModal
                         showModal={this.state.showNewArticleModal}
                         exit = {this.close.bind(this)}
-                        create = {this.createArticlePost}
+                        create = {this.createArticlePost.bind(this)}
                     />
 
                     {
