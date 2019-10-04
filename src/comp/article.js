@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Col, Modal, Button } from 'react-bootstrap';
+import { Row, Col, Modal, Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ArticleModal from './articleModal';
 import NewArticleModal from './newArticleModal';
+import ToastComp from './toast';
 
 
 class article extends Component {
@@ -17,6 +18,8 @@ class article extends Component {
             modalEle: [],
             showModal: false,
             showNewArticleModal: false,
+            showToast: false,
+            toastMsg: null,
         };
     }
 
@@ -41,7 +44,7 @@ class article extends Component {
         })
     }
 
-    clickedAddArticleBtnHandler(){
+    clickedAddArticleBtnHandler() {
         this.setState({
             showNewArticleModal: true,
         })
@@ -55,6 +58,12 @@ class article extends Component {
         })
 
         this.componentDidMount()
+    }
+
+    closeToast(){
+        this.setState({
+            showToast: false,
+        })
     }
 
 
@@ -75,10 +84,13 @@ class article extends Component {
             let temp = this.state.modalEle
             temp.content = content
             this.setState({
-                modalEle: temp
+                modalEle: temp,
+                showToast: true,
+                toastMsg: "Article Updated!!!"
             })
 
-            alert('Updated!!!')
+            // alert('Updated!!!')
+
         }).catch(err => err);
 
     }
@@ -97,12 +109,15 @@ class article extends Component {
             },
         }
         ).then(res => {
-            
 
-            alert('Article created!!!')
+            this.setState({
+                showToast: true,
+                toastMsg: "Article Created!!!"
+            })
+            //alert('Article created!!!')
             this.close()
         }).catch(err => err);
-        
+
     }
 
     deleteBlogPost(title) {
@@ -118,12 +133,15 @@ class article extends Component {
             },
         }
         ).then(res => {
-            
 
-            alert('Article Deleted!!!')
+            this.setState({
+                showToast: true,
+                toastMsg: "Article Deleted!!!"
+            })
+            // alert('Article Deleted!!!')
             this.close()
         }).catch(err => err);
-        
+
     }
 
     render() {
@@ -140,20 +158,24 @@ class article extends Component {
 
                 <div className="row">
 
+                    <ToastComp  show={this.state.showToast} close={this.closeToast.bind(this)} msg={this.state.toastMsg}/>
+                   
+
+
                     {/* Update Blog MOdal */}
                     <ArticleModal
                         showModal={this.state.showModal}
                         element={this.state.modalEle}
                         exit={this.close.bind(this)}
                         update={this.updateBlogPost.bind(this)}
-                        delete = {this.deleteBlogPost.bind(this)}
+                        delete={this.deleteBlogPost.bind(this)}
                     />
 
                     {/* Create New Blog Modal */}
                     <NewArticleModal
                         showModal={this.state.showNewArticleModal}
-                        exit = {this.close.bind(this)}
-                        create = {this.createArticlePost.bind(this)}
+                        exit={this.close.bind(this)}
+                        create={this.createArticlePost.bind(this)}
                     />
 
                     {
@@ -182,12 +204,12 @@ class article extends Component {
                     <div className="col-md-12 p-1 mt-5">
                         <div className="row">
                             <div className="col-md-3 mx-auto">
-                            <Button className="btn-success btn-block btn-lg" key="addArticleBtn" 
-                            onClick={this.clickedAddArticleBtnHandler.bind(this)}>Add Arcticle</Button>
+                                <Button className="btn-success btn-block btn-lg" key="addArticleBtn"
+                                    onClick={this.clickedAddArticleBtnHandler.bind(this)}>Add Arcticle</Button>
                             </div>
                         </div>
 
-                       
+
                     </div>
                 </div>
             );
