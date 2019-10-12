@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Modal, Button} from 'react-bootstrap';
+import { Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ArticleModal from './articleModal';
 import NewArticleModal from './newArticleModal';

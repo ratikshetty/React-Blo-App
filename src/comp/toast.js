@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Modal, Button, Toast, Alert } from 'react-bootstrap';
+import { Toast} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
