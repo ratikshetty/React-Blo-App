@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Modal, Button, InputGroup, FormControl } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Comment from './comment'
 
 
 
@@ -47,7 +48,7 @@ class articleModal extends Component {
 
                 <Modal.Body>
                     <p className="text-center">{this.props.element.content}</p>
-                    <hr></hr>
+                    <hr ></hr>
 
                     <div className="row p-1">
                         <div className="col-md-6 text-left">
@@ -68,7 +69,12 @@ class articleModal extends Component {
                           <input type="text" id="content" ></input>
                         </div>
 
-                    </div> : null }
+                    </div>
+                    
+
+                     : null }
+
+                    <Comment title={this.props.element.title}/>
                 </Modal.Body>
 
                 <Modal.Footer>

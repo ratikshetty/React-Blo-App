@@ -6,7 +6,9 @@ import NewArticleModal from './newArticleModal';
 import ToastComp from './toast';
 
 
+
 class article extends Component {
+
 
 
     constructor(props) {
@@ -23,10 +25,12 @@ class article extends Component {
         };
     }
 
+    
+
 
 
     componentDidMount() {
-        fetch('http://127.0.0.1:5000/meta/100')
+        fetch('http://127.0.0.1:5100/meta/100')
             .then(response => response.json())
             .then(json => {
                 this.setState({
@@ -69,7 +73,7 @@ class article extends Component {
 
     updateBlogPost(title, content) {
 
-        fetch('http://127.0.0.1:5000/edit', {
+        fetch('http://127.0.0.1:5100/edit', {
             method: 'POST',
             body: JSON.stringify({
                 "title": title,
@@ -97,7 +101,7 @@ class article extends Component {
 
     createArticlePost(title, content) {
 
-        fetch('http://127.0.0.1:5000/new', {
+        fetch('http://127.0.0.1:5100/new', {
             method: 'POST',
             body: JSON.stringify({
                 "title": title,
@@ -122,7 +126,7 @@ class article extends Component {
 
     deleteBlogPost(title) {
 
-        fetch('http://127.0.0.1:5000/delete', {
+        fetch('http://127.0.0.1:5100/delete', {
             method: 'DELETE',
             body: JSON.stringify({
                 "title": title,
@@ -182,12 +186,12 @@ class article extends Component {
                         this.state.data.map(ele =>
                             <div className="col-md-6 mb-4" key={ele.articleId} >
                                 <div className="col-md-12 p-1 text-center" onClick={() => this.clickedArticleHandler(ele)}
-                                    style={{ borderRadius: 10 + 'px', background: 'white', color: 'black', cursor: 'pointer' }}>
-                                    <h3 className="">
+                                    style={{ borderRadius: 10 + 'px', background: 'grey', color: 'black', cursor: 'pointer', boxShadow:'10px 10px 8px lightgrey' }}>
+                                    <h3 className="pt-2">
                                         {ele.title}
 
                                     </h3>
-                                    <hr></hr>
+                                    <hr style={{borderColor:'goldenrod'}}></hr>
                                     <p className="p-1"> {ele.content}</p>
 
 
@@ -202,9 +206,9 @@ class article extends Component {
 
 
                     <div className="col-md-12 p-1 mt-5">
-                        <div className="row">
+                        <div className="row" >
                             <div className="col-md-3 mx-auto">
-                                <Button className="btn-success btn-block btn-lg" key="addArticleBtn"
+                                <Button style={{color:'black'}} className="btn-success btn-block btn-lg" key="addArticleBtn"
                                     onClick={this.clickedAddArticleBtnHandler.bind(this)}>Add Arcticle</Button>
                             </div>
                         </div>
