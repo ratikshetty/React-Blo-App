@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 import NewArticleModal from './newCreateModal'
 
 let commentBaseURL = 'http://127.0.0.1:5200'
@@ -88,14 +88,14 @@ class comment extends Component {
         }).catch(err => err);
     }
 
-    showCommentModal(){
+    showCommentModal() {
         document.getElementById('myModal').style.display = "none"
         this.setState({
             showModal: true
         })
     }
 
-    closeCommentModal(){
+    closeCommentModal() {
 
         this.setState({
             showModal: false,
@@ -129,16 +129,17 @@ class comment extends Component {
             // </div>
 
             <div className='row'>
+                
                 <div className='col-md-4'>
-                <h5 className="pt-3 pb-3"><strong>Comments:</strong></h5>
+                    <h5 className="pt-3 pb-3"><strong>Comments: <a  style={{ color: 'green', cursor: 'pointer' }} key="addArticleBtn"
+                        onClick={this.showCommentModal.bind(this)}><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon></a></strong></h5>
                 </div>
                 <div className='col-md-8'>
-                <Button style={{color:'black'}} className="btn-success " key="addArticleBtn"
-                                    onClick={this.showCommentModal.bind(this)}>Add Comment</Button>
+
                 </div>
             </div>
 
-             
+
         )
     }
 
@@ -150,15 +151,16 @@ class comment extends Component {
             return (
 
                 <div>
-
+                    <hr className='p-0 m-0 mt-2'></hr>
                     {this.addComment()}
                     {/* Create New Blog Modal */}
                     <NewArticleModal
                         showModal={this.state.showModal}
                         exit={this.closeCommentModal.bind(this)}
                         create={this.addCommentBtnHandler.bind(this)}
-                        comp = {['comment']}
-                        title = "New Comment"
+                        comp={['comment']}
+                        title="New Comment"
+                        btnText = 'Create'
                     />
                     <div className="Row">
 
@@ -169,14 +171,14 @@ class comment extends Component {
                                         <p className="p-0 m-0">{ele.comment}</p>
                                     </div>
                                     <div className='col-md-1 text-right'>
-                                        <a style={{ color: 'rgb(187, 0, 0)', cursor:'pointer' }} className=" " key="delCommentBtn"
+                                        <a style={{ color: 'rgb(187, 0, 0)', cursor: 'pointer' }} className=" " key="delCommentBtn"
                                             onClick={() => {
                                                 this.deleteCommentBtnHandler(ele.commentId)
                                             }}><FontAwesomeIcon icon={faTrash} /></a>
                                     </div>
                                 </div>
 
-                                <p className="p-0 m-0" style={{color:'black'}}>- {ele.author}</p>
+                                <p className="p-0 m-0" style={{ color: 'black' }}>- {ele.author}</p>
 
 
                             </div>
@@ -187,15 +189,17 @@ class comment extends Component {
         }
         return (
             <div>
+                <hr className='p-0 m-0 mt-2'></hr>
                 {this.addComment()}
                 {/* Create New Blog Modal */}
                 <NewArticleModal
-                       showModal={this.state.showModal}
-                       exit={this.closeCommentModal.bind(this)}
-                       create={this.addCommentBtnHandler.bind(this)}
-                       comp = {['comment']}
-                       title = "New comment"
-                    />
+                    showModal={this.state.showModal}
+                    exit={this.closeCommentModal.bind(this)}
+                    create={this.addCommentBtnHandler.bind(this)}
+                    comp={['comment']}
+                    title="New comment"
+                    btnText = 'Create'
+                />
             </div>
 
         )

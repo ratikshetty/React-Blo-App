@@ -3,6 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Comment from './comment'
 import Tag from './tags'
+import NewCreateModal from './newCreateModal'
 
 
 
@@ -14,25 +15,33 @@ class articleModal extends Component {
 
         this.state = {
             showEdit: false,
-            ele: {'title': 'test'},
+            showUpdateModal: false,
             updateDisabled: true,
             editDisable: false,
 
         };
     }
 
-    update(){
-        this.setState({
-            showEdit: !this.state.showEdit,
-            updateDisabled: !this.state.updateDisabled,
-            editDisable: !this.state.editDisable,
-        })
+    update(obj){
+        
+       this.props.update(this.props.element.title, obj.content)
+       this.closeUpdateModal()
+    }
 
-        // if(document.getElementById('content') !== null){
-        //     let temp = document.getElementById('content').value
-        //     alert(temp)
-        // }
-       
+    showUpdateModal(){
+
+        document.getElementById('myModal').style.display = "none"
+        this.setState({
+            
+            showUpdateModal: true
+        })
+    }
+
+    closeUpdateModal(){
+        this.setState({
+            showUpdateModal: false
+        })
+        document.getElementById('myModal').style.display = "block"
     }
 
     
@@ -74,19 +83,29 @@ class articleModal extends Component {
                     
 
                      : null }
+                     <hr className='p-0 m-0 pb-3' style={{height:`1px`}}></hr>
 
                      <Tag title={this.props.element.title}/>
 
                     <Comment title={this.props.element.title}/>
+
+                    <NewCreateModal
+                        showModal={this.state.showUpdateModal}
+                        exit={this.closeUpdateModal.bind(this)}
+                        create={this.update.bind(this)}
+                        comp={['content']}
+                        title="Content"
+                        btnText = 'Update'
+                    />
                 </Modal.Body>
 
                 <Modal.Footer>
                     <Button variant="secondary" onClick={this.props.exit}>Close</Button>
-                    <Button variant="primary" disabled={this.state.updateDisabled}  onClick={() => {
+                    {/* <Button variant="primary" disabled={this.state.updateDisabled}  onClick={() => {
                         this.props.update(this.props.element.title, document.getElementById('content').value)
                         this.update()
-                    }}>update</Button>
-                    <Button variant="primary" disabled={this.state.editDisable}  onClick={this.update.bind(this)}>edit</Button>
+                    }}>update</Button> */}
+                    <Button variant="primary" disabled={this.state.editDisable}  onClick={this.showUpdateModal.bind(this)}>edit</Button>
                     <Button variant="danger" onClick={() => {
                         this.props.delete(this.props.element.title)}}>Delete</Button>
                 </Modal.Footer>

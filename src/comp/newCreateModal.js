@@ -51,7 +51,7 @@ class newCreateModal extends Component {
                 <Modal.Footer>
                     <Button variant="secondary" onClick={this.props.exit}>Close</Button>
                   
-                    <Button variant="primary" disabled={false}  onClick={this.create.bind(this)}>Create</Button>
+                    <Button variant="primary" disabled={false}  onClick={this.create.bind(this)}>{this.props.btnText}</Button>
                 </Modal.Footer>
             </Modal>
         );
