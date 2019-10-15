@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Comment from './comment'
+import Tag from './tags'
 
 
 
@@ -73,6 +74,8 @@ class articleModal extends Component {
                     
 
                      : null }
+
+                     <Tag title={this.props.element.title}/>
 
                     <Comment title={this.props.element.title}/>
                 </Modal.Body>
