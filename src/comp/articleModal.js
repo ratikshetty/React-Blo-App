@@ -41,7 +41,7 @@ class articleModal extends Component {
 
         
         return (
-            <Modal show={this.props.showModal} size="lg">
+            <Modal show={this.props.showModal} size="lg" id='myModal'>
                 <Modal.Header >
                     <Modal.Title >{this.props.element.title}</Modal.Title>
 

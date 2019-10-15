@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import NewArticleModal from './newCreateModal'
 
 let commentBaseURL = 'http://127.0.0.1:5200'
 
@@ -16,7 +17,8 @@ class comment extends Component {
         this.state = {
             isLoaded: false,
             data: [],
-            title: this.props.title
+            title: this.props.title,
+            showModal: false
         };
     }
 
@@ -64,13 +66,13 @@ class comment extends Component {
 
     }
 
-    addCommentBtnHandler() {
+    addCommentBtnHandler(obj) {
 
         fetch(`${commentBaseURL}/new`, {
             method: 'POST',
             body: JSON.stringify({
                 "title": this.props.title,
-                "comment": document.getElementById('comment').value
+                "comment": obj.comment
             }),
             headers: {
                 'Accept': 'application/json',
@@ -82,33 +84,61 @@ class comment extends Component {
             document.getElementById('comment').value = ""
             this.componentDidMount()
 
-            this.close()
+            this.closeCommentModal()
         }).catch(err => err);
+    }
+
+    showCommentModal(){
+        document.getElementById('myModal').style.display = "none"
+        this.setState({
+            showModal: true
+        })
+    }
+
+    closeCommentModal(){
+
+        this.setState({
+            showModal: false,
+        })
+        document.getElementById('myModal').style.display = "block"
+        this.componentDidMount()
     }
 
     addComment() {
         return (
-            <div>
-                <hr className="p-0 m-0" style={{ height: 1 }}></hr>
+            // <div>
+            //     <hr className="p-0 m-0" style={{ height: 1 }}></hr>
+            //     <h5 className="pt-3 pb-3"><strong>Comments:</strong></h5>
+
+            //     <div className="row pb-2">
+            //         <div className="col-md-3">
+            //             <strong>New Comment:</strong>
+            //         </div>
+            //         <div className="col-md-6">
+            //             <input type="text" id="comment" style={{ width: 100 + '%' }}></input>
+            //         </div>
+            //         <div className="col-md-3">
+            //             <Button style={{ color: 'black' }} className="btn-success btn-block" key="delCommentBtn"
+            //                 onClick={() => {
+            //                     this.addCommentBtnHandler()
+            //                 }}>Add</Button>
+            //         </div>
+            //     </div>
+
+
+            // </div>
+
+            <div className='row'>
+                <div className='col-md-4'>
                 <h5 className="pt-3 pb-3"><strong>Comments:</strong></h5>
-
-                <div className="row pb-2">
-                    <div className="col-md-3">
-                        <strong>New Comment:</strong>
-                    </div>
-                    <div className="col-md-6">
-                        <input type="text" id="comment" style={{ width: 100 + '%' }}></input>
-                    </div>
-                    <div className="col-md-3">
-                        <Button style={{ color: 'black' }} className="btn-success btn-block" key="delCommentBtn"
-                            onClick={() => {
-                                this.addCommentBtnHandler()
-                            }}>Add</Button>
-                    </div>
                 </div>
-
-
+                <div className='col-md-8'>
+                <Button style={{color:'black'}} className="btn-success " key="addArticleBtn"
+                                    onClick={this.showCommentModal.bind(this)}>Add Comment</Button>
+                </div>
             </div>
+
+             
         )
     }
 
@@ -122,6 +152,14 @@ class comment extends Component {
                 <div>
 
                     {this.addComment()}
+                    {/* Create New Blog Modal */}
+                    <NewArticleModal
+                        showModal={this.state.showModal}
+                        exit={this.closeCommentModal.bind(this)}
+                        create={this.addCommentBtnHandler.bind(this)}
+                        comp = {['comment']}
+                        title = "New Comment"
+                    />
                     <div className="Row">
 
                         {data.map(ele =>
@@ -150,6 +188,14 @@ class comment extends Component {
         return (
             <div>
                 {this.addComment()}
+                {/* Create New Blog Modal */}
+                <NewArticleModal
+                       showModal={this.state.showModal}
+                       exit={this.closeCommentModal.bind(this)}
+                       create={this.addCommentBtnHandler.bind(this)}
+                       comp = {['comment']}
+                       title = "New comment"
+                    />
             </div>
 
         )

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ArticleModal from './articleModal';
-import NewArticleModal from './newArticleModal';
+import NewArticleModal from './newCreateModal';
 import ToastComp from './toast';
 
 
@@ -99,13 +99,13 @@ class article extends Component {
 
     }
 
-    createArticlePost(title, content) {
+    createArticlePost(obj) {
 
         fetch('http://127.0.0.1:5100/new', {
             method: 'POST',
             body: JSON.stringify({
-                "title": title,
-                "content": content
+                "title": obj.title,
+                "content": obj.content
             }),
             headers: {
                 'Accept': 'application/json',
@@ -180,6 +180,8 @@ class article extends Component {
                         showModal={this.state.showNewArticleModal}
                         exit={this.close.bind(this)}
                         create={this.createArticlePost.bind(this)}
+                        comp = {['title', 'content']}
+                        title = "New Article"
                     />
 
                     {

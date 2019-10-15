@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBan } from '@fortawesome/free-solid-svg-icons'
+import NewArticleModal from './newCreateModal'
 
 let tagBaseURL = 'http://127.0.0.1:5300'
 
@@ -15,7 +16,8 @@ class tags extends Component {
 
         this.state = {
           data: [],
-          isLoaded: false
+          isLoaded: false,
+          showTagModal: false,
         };
     }
 
@@ -46,16 +48,16 @@ class tags extends Component {
                 
 
                 <div className="row pb-2 pt-4">
-                    <div className="col-md-3">
+                    <div className="col-md-4">
                         <strong>New Tags:</strong>
                     </div>
-                    <div className="col-md-6">
+                    {/* <div className="col-md-6">
                         <input type="text" id="tag" style={{ width: 100 + '%' }}></input>
-                    </div>
-                    <div className="col-md-3">
+                    </div> */}
+                    <div className="col-md-8">
                         <Button style={{ color: 'black' }} className="btn-success btn-block" key="delCommentBtn"
                             onClick={() => {
-                                this.addTagBtnHandler()
+                                this.tagModal()
                             }}>Add</Button>
                     </div>
                 </div>
@@ -65,12 +67,12 @@ class tags extends Component {
         )
     }
 
-    addTagBtnHandler(){
+    addTagBtnHandler(obj){
         fetch(`${tagBaseURL}/new`, {
             method: 'POST',
             body: JSON.stringify({
                 "article_title": this.props.title,
-                "tag": document.getElementById('tag').value
+                "tag": obj.tag
             }),
             headers: {
                 'Accept': 'application/json',
@@ -79,11 +81,27 @@ class tags extends Component {
         }
         ).then(res => {
 
-            document.getElementById('tag').value = ""
-            this.componentDidMount()
+            // document.getElementById('tag').value = ""
+            this.closeTagModal()
 
             
         }).catch(err => err);
+    }
+
+    tagModal(){
+
+        document.getElementById('myModal').style.display = "none"
+        this.setState({
+            showTagModal: true
+        })
+    }
+
+    closeTagModal(){
+        this.setState({
+            showTagModal: false
+        })
+        document.getElementById('myModal').style.display = "block"
+        this.componentDidMount()
     }
 
 
@@ -106,7 +124,7 @@ class tags extends Component {
         }).catch(err => err);
 
     }
-
+    closeCommentModal
     render(){
 
         if(this.state.isLoaded){
@@ -138,6 +156,13 @@ class tags extends Component {
                     </div></div>
                 </div>
                 {this.addTag()}
+                <NewArticleModal
+                        showModal={this.state.showTagModal}
+                        exit={this.closeTagModal.bind(this)}
+                        create={this.addTagBtnHandler.bind(this)}
+                        comp = {['tag']}
+                        title = "New Tag"
+                    />
                 
                 
             </div>
@@ -145,7 +170,18 @@ class tags extends Component {
         }
         else{
             return(
-                this.addTag()
+                <div>
+               { this.addTag()}
+
+                
+                <NewArticleModal
+                        showModal={this.state.showTagModal}
+                        exit={this.closeTagModal.bind(this)}
+                        create={this.addTagBtnHandler.bind(this)}
+                        comp = {['tag']}
+                        title = "New Tag"
+                    />
+                    </div>
             )
         }
 
