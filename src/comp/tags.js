@@ -24,7 +24,7 @@ class tags extends Component {
     componentDidMount() {
 
 
-        fetch(`${tagBaseURL}/searchTag/${this.props.title}`)
+        fetch(`http://localhost:3000/tags/${this.props.title}`)
             .then(response => response.json())
             .then(json => {
                 this.setState({
@@ -61,7 +61,7 @@ class tags extends Component {
     }
 
     addTagBtnHandler(obj) {
-        fetch(`${tagBaseURL}/new`, {
+        fetch(`http://localhost:3000/tags`, {
             method: 'POST',
             body: JSON.stringify({
                 "article_title": this.props.title,

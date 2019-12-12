@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import TextareaAutosize from 'react-autosize-textarea';
+
 
 
 
@@ -25,6 +27,7 @@ class newCreateModal extends Component {
         this.props.create(obj)
     }
 
+
     render(){
         return(
         <Modal show={this.props.showModal} size="lg" >
@@ -37,11 +40,14 @@ class newCreateModal extends Component {
 
                     {this.props.comp.map(ele =>
                   <div className="row pb-2">
-                      <div className="col-md-5 text-right">
+                      <div className="col-md-3 text-right">
                             {ele.toUpperCase()}:
                       </div>
-                      <div className="col-md-6">
-                          <input type="text" id={ele}></input>
+                      <div className="col-md-8">
+                          <TextareaAutosize type="text" 
+                            id={ele} async
+                            defaultValue={this.props.value}
+                             style={{width: 100+'%'}} ></TextareaAutosize>
                       </div>
                   </div>
 

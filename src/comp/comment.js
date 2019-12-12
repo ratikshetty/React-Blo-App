@@ -25,7 +25,7 @@ class comment extends Component {
     componentDidMount() {
 
         let title = this.state.title.split(' ').join('%20')
-        fetch(`${commentBaseURL}/retrieve/${title}/1000`)
+        fetch(`http://localhost:3000/comments/${title}`)
             .then(response => response.json())
             .then(json => {
                 this.setState({
@@ -44,7 +44,7 @@ class comment extends Component {
 
     deleteCommentBtnHandler(id) {
 
-        fetch(`${commentBaseURL}/delete`, {
+        fetch(`http://localhost:3000/comments`, {
             method: 'DELETE',
             body: JSON.stringify({
                 "id": id,
@@ -68,7 +68,7 @@ class comment extends Component {
 
     addCommentBtnHandler(obj) {
 
-        fetch(`${commentBaseURL}/new`, {
+        fetch(`http://localhost:3000/comments`, {
             method: 'POST',
             body: JSON.stringify({
                 "title": this.props.title,

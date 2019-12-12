@@ -30,7 +30,7 @@ class article extends Component {
 
 
     componentDidMount() {
-        fetch('http://127.0.0.1:5100/meta/100')
+        fetch('http://localhost:3000/articles')
             .then(response => response.json())
             .then(json => {
                 this.setState({
@@ -73,8 +73,8 @@ class article extends Component {
 
     updateBlogPost(title, content) {
 
-        fetch('http://127.0.0.1:5100/edit', {
-            method: 'POST',
+        fetch('http://localhost:3000/articles', {
+            method: 'PUT',
             body: JSON.stringify({
                 "title": title,
                 "content": content
@@ -126,7 +126,7 @@ class article extends Component {
 
     deleteBlogPost(title) {
 
-        fetch('http://127.0.0.1:5100/delete', {
+        fetch('http://localhost:3000/articles', {
             method: 'DELETE',
             body: JSON.stringify({
                 "title": title,
@@ -182,6 +182,7 @@ class article extends Component {
                         create={this.createArticlePost.bind(this)}
                         comp = {['title', 'content']}
                         title = "New Article"
+                        btnText= 'Create'
                     />
 
                     {

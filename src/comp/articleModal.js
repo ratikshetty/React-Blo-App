@@ -96,6 +96,7 @@ class articleModal extends Component {
                         comp={['content']}
                         title="Content"
                         btnText = 'Update'
+                        value = {this.props.element.content}
                     />
                 </Modal.Body>
 
