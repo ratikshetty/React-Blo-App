@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ArticleModal from './articleModal';
 import NewArticleModal from './newCreateModal';
 import ToastComp from './toast';
-
+import Login from './login';
 
 
 class article extends Component {
@@ -22,6 +22,7 @@ class article extends Component {
             showNewArticleModal: false,
             showToast: false,
             toastMsg: null,
+            showLoginModal:true
         };
     }
 
@@ -59,6 +60,7 @@ class article extends Component {
             showModal: false,
             modalEle: [],
             showNewArticleModal: false,
+            showLoginModal: false
         })
 
         this.componentDidMount()
@@ -164,7 +166,10 @@ class article extends Component {
 
                     <ToastComp  show={this.state.showToast} close={this.closeToast.bind(this)} msg={this.state.toastMsg}/>
                    
-
+                    <Login 
+                        showModal={this.state.showLoginModal}
+                        exit= {this.close.bind(this)}
+                    />
 
                     {/* Update Blog MOdal */}
                     <ArticleModal
