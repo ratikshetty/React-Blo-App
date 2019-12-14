@@ -69,6 +69,15 @@ class login extends Component {
         })
     }
 
+    exit(){
+
+        this.setState({
+            invalid: 'none'
+        })
+
+        this.props.exit()
+    }
+
     render() {
         return (
             <Modal show={this.props.showModal} size="md" >
@@ -111,7 +120,7 @@ class login extends Component {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={this.props.exit}>Close</Button>
+                    <Button variant="secondary" onClick={this.exit.bind(this)}>Close</Button>
 
                     <Button variant="primary" disabled={false} onClick={this.login.bind(this)} >{this.state.btnTxt}</Button>
                 </Modal.Footer>

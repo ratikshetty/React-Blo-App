@@ -12,8 +12,12 @@ function App() {
         <div className='col-md-1 text-right pt-1 pb-1 pl-4'>
           <h1><FontAwesomeIcon icon={faBlog} /></h1>
         </div>
-        <div className='col-md-11 pt-1 pb-1 pl-4 m-auto text-left'>
+        <div className='col-md-9 pt-1 pb-1 pl-4 m-auto text-left'>
           <h2>React-Blog!!!</h2>
+  
+        </div>
+        <div className='col-md-2 pt-1 pb-1 pl-4 m-auto text-right' style={{color:'white'}}>
+  <p>{localStorage.username}</p>
         </div>
       </div>
       <div style={{ padding: '50px', paddingTop: '100px' }}>

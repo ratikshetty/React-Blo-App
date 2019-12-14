@@ -22,7 +22,8 @@ class article extends Component {
             showNewArticleModal: false,
             showToast: false,
             toastMsg: null,
-            showLoginModal:true
+            showLoginModal:false,
+            addArticle: false
         };
     }
 
@@ -50,9 +51,19 @@ class article extends Component {
     }
 
     clickedAddArticleBtnHandler() {
-        this.setState({
-            showNewArticleModal: true,
-        })
+
+        if(!localStorage.username){
+            this.setState({
+                showLoginModal: true,
+                addArticle:true
+            })
+        }else{
+            this.setState({
+                showNewArticleModal: true,
+                addArticle: false
+            })
+        }
+        
     }
 
     close() {
@@ -64,6 +75,10 @@ class article extends Component {
         })
 
         this.componentDidMount()
+
+        if(this.state.addArticle){
+            this.clickedAddArticleBtnHandler()
+        }
     }
 
     closeToast(){
@@ -111,9 +126,13 @@ class article extends Component {
             }),
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'authorization': `bearer ${localStorage.getItem('authToken')}`
+            
             },
+            
         }
+
         ).then(res => {
 
             this.setState({
