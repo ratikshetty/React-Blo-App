@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Button} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ArticleModal from './articleModal';
 import NewArticleModal from './newCreateModal';
 import ToastComp from './toast';
 import Login from './login';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBlog, faUser } from '@fortawesome/free-solid-svg-icons'
 
 
 class article extends Component {
@@ -22,12 +24,12 @@ class article extends Component {
             showNewArticleModal: false,
             showToast: false,
             toastMsg: null,
-            showLoginModal:false,
+            showLoginModal: false,
             addArticle: false
         };
     }
 
-    
+
 
 
 
@@ -52,18 +54,18 @@ class article extends Component {
 
     clickedAddArticleBtnHandler() {
 
-        if(!localStorage.username){
+        if (!localStorage.username) {
             this.setState({
                 showLoginModal: true,
-                addArticle:true
+                addArticle: true
             })
-        }else{
+        } else {
             this.setState({
                 showNewArticleModal: true,
                 addArticle: false
             })
         }
-        
+
     }
 
     close() {
@@ -76,12 +78,12 @@ class article extends Component {
 
         this.componentDidMount()
 
-        if(this.state.addArticle){
+        if (this.state.addArticle) {
             this.clickedAddArticleBtnHandler()
         }
     }
 
-    closeToast(){
+    closeToast() {
         this.setState({
             showToast: false,
         })
@@ -128,9 +130,9 @@ class article extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'authorization': `bearer ${localStorage.getItem('authToken')}`
-            
+
             },
-            
+
         }
 
         ).then(res => {
@@ -169,6 +171,25 @@ class article extends Component {
 
     }
 
+    menuBar(){
+        return(
+            <div className="col-md-12">
+                        <div className='row container-fluid p-0 m-0 mb-5' style={{ position: 'fixed', zIndex: '1', background: '#004d80', color: 'goldenrod', '-webkit-box-reflect': 'left', maxWidth: `100%` }}>
+                            <div className='col-md-1 text-right pt-1 pb-1 pl-4'>
+                                <h2><FontAwesomeIcon icon={faBlog} /></h2>
+                            </div>
+                            <div className='col-md-9 pt-1 pb-1 pl-4 m-auto text-left'>
+                                <h2>React-Blog!!!</h2>
+
+                            </div>
+                            <div className='col-md-2 pr-4 m-auto text-right' style={{ color: 'white' }}>
+                                <p><span className='pr-2'><FontAwesomeIcon icon={faUser} /></span>{localStorage.username}</p>
+                            </div>
+                        </div>
+                    </div>
+        );
+    }
+
     render() {
 
 
@@ -182,12 +203,16 @@ class article extends Component {
 
 
                 <div className="row">
+                    
+                    {this.menuBar()}
 
-                    <ToastComp  show={this.state.showToast} close={this.closeToast.bind(this)} msg={this.state.toastMsg}/>
-                   
-                    <Login 
+                    <div className= "col-md-12" style={{ padding: '50px', paddingTop: '100px' }}>
+                        <div className='row'>
+                    <ToastComp show={this.state.showToast} close={this.closeToast.bind(this)} msg={this.state.toastMsg} />
+
+                    <Login
                         showModal={this.state.showLoginModal}
-                        exit= {this.close.bind(this)}
+                        exit={this.close.bind(this)}
                     />
 
                     {/* Update Blog MOdal */}
@@ -204,21 +229,21 @@ class article extends Component {
                         showModal={this.state.showNewArticleModal}
                         exit={this.close.bind(this)}
                         create={this.createArticlePost.bind(this)}
-                        comp = {['title', 'content']}
-                        title = "New Article"
-                        btnText= 'Create'
+                        comp={['title', 'content']}
+                        title="New Article"
+                        btnText='Create'
                     />
 
                     {
                         this.state.data.map(ele =>
                             <div className="col-md-6 mb-4" key={ele.articleId} >
                                 <div className="col-md-12 p-1 text-center" onClick={() => this.clickedArticleHandler(ele)}
-                                    style={{ borderRadius: 10 + 'px', background: 'grey', color: 'black', cursor: 'pointer', boxShadow:'10px 10px 8px lightgrey' }}>
+                                    style={{ borderRadius: 10 + 'px', background: 'grey', color: 'black', cursor: 'pointer', boxShadow: '10px 10px 8px lightgrey' }}>
                                     <h3 className="pt-2">
                                         {ele.title}
 
                                     </h3>
-                                    <hr style={{borderColor:'goldenrod'}}></hr>
+                                    <hr style={{ borderColor: 'goldenrod' }}></hr>
                                     <p className="p-1"> {ele.content}</p>
 
 
@@ -235,12 +260,14 @@ class article extends Component {
                     <div className="col-md-12 p-1 mt-5">
                         <div className="row" >
                             <div className="col-md-3 mx-auto">
-                                <Button style={{color:'black'}} className="btn-success btn-block btn-lg" key="addArticleBtn"
+                                <Button style={{ color: 'black' }} className="btn-success btn-block btn-lg" key="addArticleBtn"
                                     onClick={this.clickedAddArticleBtnHandler.bind(this)}>Add Arcticle</Button>
                             </div>
                         </div>
 
 
+                    </div>
+                    </div>
                     </div>
                 </div>
             );
@@ -248,7 +275,13 @@ class article extends Component {
 
         else {
             return (
-                <h1>fetching...</h1>);
+                <div className='row'>
+                    {this.menuBar()}
+                    <div className='col-md-12' style={{ padding: '50px', paddingTop: '100px' }}>
+                <h1>fetching...</h1>
+                </div>
+                </div>
+                );
         }
 
 
