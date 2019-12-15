@@ -16,8 +16,6 @@ class articleModal extends Component {
         this.state = {
             showEdit: false,
             showUpdateModal: false,
-            updateDisabled: true,
-            editDisable: false,
 
         };
     }
@@ -44,10 +42,12 @@ class articleModal extends Component {
         document.getElementById('myModal').style.display = "block"
     }
 
+
     
 
     render() {
 
+        
         
         return (
             <Modal show={this.props.showModal} size="lg" id='myModal'>
@@ -106,8 +106,8 @@ class articleModal extends Component {
                         this.props.update(this.props.element.title, document.getElementById('content').value)
                         this.update()
                     }}>update</Button> */}
-                    <Button variant="primary" disabled={this.state.editDisable}  onClick={this.showUpdateModal.bind(this)}>edit</Button>
-                    <Button variant="danger" onClick={() => {
+                    <Button variant="primary" disabled={localStorage.getItem('username') !== this.props.element.author}  onClick={this.showUpdateModal.bind(this)}>edit</Button>
+                    <Button variant="danger" disabled={localStorage.getItem('username') !== this.props.element.author} onClick={() => {
                         this.props.delete(this.props.element.title)}}>Delete</Button>
                 </Modal.Footer>
             </Modal>

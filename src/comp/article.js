@@ -131,7 +131,9 @@ class article extends Component {
         localStorage.removeItem('authToken')
 
         this.componentDidMount()
-        toast.warn("Successfully Logged Out!!!")
+        toast.warn("Successfully Logged Out!!!", {
+            hideProgressBar: true
+        })
     }
 
     Login(){
@@ -163,7 +165,9 @@ class article extends Component {
                 showToast: true,
                 toastMsg: "Article Created!!!"
             })
-            toast.info('Article created!!')
+            toast.info('Article created!!', {
+                hideProgressBar: true
+            })
             //alert('Article created!!!')
             this.close()
         }).catch(err => err);
@@ -190,7 +194,9 @@ class article extends Component {
                 toastMsg: "Article Deleted!!!"
             })
             // alert('Article Deleted!!!')
-            toast.info('Article Deleted!!!')
+            toast.info('Article Deleted!!!', {
+                hideProgressBar: true
+            })
             this.close()
         }).catch(err => err);
 
@@ -277,15 +283,16 @@ class article extends Component {
                                 btnText='Create'
                             />
 
+                        
                             {
                                 this.state.data.map(ele =>
-                                    <div className="col-md-6 mb-4" key={ele.articleId} >
+                                    <div className="col-md-6 mb-4" key={ele.articleId} style={{display: 'flex'}}>
                                         <div className="col-md-12 p-1 text-center" onClick={() => this.clickedArticleHandler(ele)}
                                             style={{ borderRadius: 10 + 'px', background: 'grey', color: 'black', cursor: 'pointer', boxShadow: '10px 10px 8px lightgrey' }}>
-                                            <h3 className="pt-2">
+                                            <h4 className="pt-2">
                                                 {ele.title}
 
-                                            </h3>
+                                            </h4>
                                             <hr style={{ borderColor: 'goldenrod' }}></hr>
                                             <p className="p-1"> {ele.content}</p>
                                         </div>
@@ -294,6 +301,7 @@ class article extends Component {
 
                                 )
                             }
+                            
 
 
                             <div className="col-md-12 p-1 mt-5">
