@@ -56,7 +56,7 @@ class login extends Component {
             console.log(res);
             localStorage.setItem('authToken', res.token)
             localStorage.setItem('username', username)
-            this.props.exit()
+            this.props.exit(true)
         })
         .catch(err =>{
             console.log(err);

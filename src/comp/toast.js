@@ -20,7 +20,7 @@ class toast extends Component {
     
 
             return (
-                <div className="col-md-11 p-2" style={{position:"fixed", top:0, zIndex:99, color:"white"}}>
+                <div className="col-md-11 p-2" style={{position:"fixed", top:0, zIndex:2, color:"white"}}>
                     <Toast  show={this.props.show} onClose={this.props.close} style={{maxWidth:100+'%'}} delay={3000} autohide>
                         <Toast.Header style={{backgroundColor:"green", color:"white"}}>
                             <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
