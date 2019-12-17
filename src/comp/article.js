@@ -27,17 +27,14 @@ class article extends Component {
             showToast: false,
             toastMsg: null,
             showLoginModal: false,
-            addArticle: false
+            addArticle: false,
+            btnArticle: 'My Articles',
+            dispArticles: 'none'
         };
     }
 
 
-
-
-
-    componentDidMount() {
-        toast.configure()
-
+    getAllArticles(){
         fetch('http://localhost:3000/articles')
             .then(response => response.json())
             .then(json => {
@@ -47,6 +44,35 @@ class article extends Component {
                 })
 
             });
+    }
+
+    getUserArticles(){
+        fetch(`http://localhost:3000/articles/${localStorage.username}`)
+            .then(response => response.json())
+            .then(json => {
+                this.setState({
+                    data: json,
+                    isLoaded: true
+                })
+
+            });
+    }
+
+
+    componentDidMount() {
+        toast.configure()
+
+        if(localStorage.username){
+            this.setState({
+                dispArticles: 'block'
+            })
+        }else{
+            this.setState({
+                dispArticles: 'none'
+            })
+        }
+
+        this.getAllArticles()
     }
 
     clickedArticleHandler(element) {
@@ -132,13 +158,15 @@ class article extends Component {
 
         this.componentDidMount()
         toast.warn("Successfully Logged Out!!!", {
-            hideProgressBar: true
+            hideProgressBar: true,
+            dispArticles: 'none'
         })
     }
 
     Login(){
         this.setState({
-            showLoginModal: true
+            showLoginModal: true,
+            dispArticles: 'block'
         })
     }
 
@@ -202,6 +230,22 @@ class article extends Component {
 
     }
 
+    myArticle(){
+        if(this.state.btnArticle === 'My Articles'){
+            this.getUserArticles()   
+            this.setState({
+                btnArticle: 'All Articles'
+            }) 
+        }
+        else{
+            this.getAllArticles()
+            this.setState({
+                btnArticle: 'My Articles'
+            })
+        }
+        
+    }
+
     menuBar() {
         // Return Menu bar JSX
         let loginTxt;
@@ -222,10 +266,14 @@ class article extends Component {
                         <h3>React-Blog!!!</h3>
 
                     </div>
-                    <div className='col-md-2  text-right pt-2' style={{ color: 'white', borderRight: 'solid', borderWidth:'1px' }}>
-                        <p>My Articles</p>
+                    <div className='col-md-2  text-right pt-2'
+                        onClick={this.myArticle.bind(this)}
+                        
+                        style={{ color: 'white', borderRight: 'solid', borderWidth:'1px', cursor: 'pointer', display: this.state.dispArticles }}>
+                        <p>{this.state.btnArticle}</p>
                     </div>
-                    <div className='col-md-1  text-center pt-2' style={{ color: 'white', borderRight: 'solid', borderWidth:'1px'}}>
+                    <div className='col-md-1  text-center pt-2' 
+                    style={{ color: 'white', borderRight: 'solid', borderWidth:'1px'}}>
                       {loginTxt}
                        
                     </div>
