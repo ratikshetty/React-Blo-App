@@ -34,7 +34,7 @@ class article extends Component {
     }
 
 
-    getAllArticles(){
+    getAllArticles() {
         fetch('http://localhost:3000/articles')
             .then(response => response.json())
             .then(json => {
@@ -46,7 +46,7 @@ class article extends Component {
             });
     }
 
-    getUserArticles(){
+    getUserArticles() {
         fetch(`http://localhost:3000/articles/${localStorage.username}`)
             .then(response => response.json())
             .then(json => {
@@ -62,11 +62,11 @@ class article extends Component {
     componentDidMount() {
         toast.configure()
 
-        if(localStorage.username){
+        if (localStorage.username) {
             this.setState({
                 dispArticles: 'block'
             })
-        }else{
+        } else {
             this.setState({
                 dispArticles: 'none'
             })
@@ -110,7 +110,7 @@ class article extends Component {
 
         if (verified && this.state.addArticle) {
             this.clickedAddArticleBtnHandler()
-        }else{
+        } else {
             this.setState({
                 addArticle: false
             })
@@ -152,7 +152,7 @@ class article extends Component {
 
     }
 
-    logout(){
+    logout() {
         localStorage.removeItem('username')
         localStorage.removeItem('authToken')
 
@@ -163,7 +163,7 @@ class article extends Component {
         })
     }
 
-    Login(){
+    Login() {
         this.setState({
             showLoginModal: true,
             dispArticles: 'block'
@@ -230,55 +230,63 @@ class article extends Component {
 
     }
 
-    myArticle(){
-        if(this.state.btnArticle === 'My Articles'){
-            this.getUserArticles()   
+    myArticle() {
+        if (this.state.btnArticle === 'My Articles') {
+            this.getUserArticles()
             this.setState({
                 btnArticle: 'All Articles'
-            }) 
+            })
         }
-        else{
+        else {
             this.getAllArticles()
             this.setState({
                 btnArticle: 'My Articles'
             })
         }
-        
+
     }
 
     menuBar() {
         // Return Menu bar JSX
         let loginTxt;
-        if(localStorage.username){
-            loginTxt= (<div onClick={this.logout.bind(this)} style={{cursor: 'pointer'}}>Logout</div>)
+        if (localStorage.username) {
+            loginTxt = (<div onClick={this.logout.bind(this)} style={{ cursor: 'pointer' }}>Logout</div>)
         }
-        else{
-            loginTxt= (<div onClick={this.Login.bind(this)} style={{ cursor: 'pointer'}}>Login</div>)
+        else {
+            loginTxt = (<div onClick={this.Login.bind(this)} style={{ cursor: 'pointer' }}>Login</div>)
         }
 
         return (
             <div className="col-md-12">
-                <div id='test' className='row mb-5 container-fluid' style={{position:'fixed', zIndex:'1', background: '#004d80', color: 'goldenrod', maxWidth: `100%` }}>
-                    <div className='col-md-1 text-right pt-1 pb-1 pl-4'>
-                        <h3><FontAwesomeIcon icon={faBlog} /></h3>
-                    </div>
-                    <div className='col-md-6 pt-1 pb-1 pl-4 m-auto text-left'>
-                        <h3>React-Blog!!!</h3>
+                <div id='test' className='row mb-5 container-fluid' style={{ position: 'fixed', zIndex: '1', background: '#004d80', color: 'goldenrod', maxWidth: `100%` }}>
+                    <div className='col-md-8'>
+                        <div className='row'>
+                            <div className='col-md-1 text-right pt-1 pb-1 pl-4'>
+                                <h3><FontAwesomeIcon icon={faBlog} /></h3>
+                            </div>
+                            <div className='col-md-11 pt-1 pb-1 pl-4 m-auto text-left'>
+                                <h3>React-Blog!!!</h3>
 
+                            </div>
+                        </div>
                     </div>
-                    <div className='col-md-2  text-right pt-2'
-                        onClick={this.myArticle.bind(this)}
-                        
-                        style={{ color: 'white', borderRight: 'solid', borderWidth:'1px', cursor: 'pointer', display: this.state.dispArticles }}>
-                        <p>{this.state.btnArticle}</p>
-                    </div>
-                    <div className='col-md-1  text-center pt-2' 
-                    style={{ color: 'white', borderRight: 'solid', borderWidth:'1px'}}>
-                      {loginTxt}
-                       
-                    </div>
-                    <div className='col-md-2 pr-4 text-center pt-2' style={{ color: 'white' }}>
-                        <p><span className='pr-2'><FontAwesomeIcon icon={faUser} /></span>{localStorage.username}</p>
+                    <div className='col-md-4'>
+                        <div className='row'>
+                            <div className='col-md-4  text-center pt-2'
+                                onClick={this.myArticle.bind(this)}
+
+                                style={{color: 'white', borderRight: 'solid', borderWidth: '1px', cursor: 'pointer', display: this.state.dispArticles }}>
+                                <p>{this.state.btnArticle}</p>
+                            </div>
+                            <div className='col-md-4  text-center pt-2'
+                                style={{ color: 'white', borderRight: 'solid', borderWidth: '1px' }}>
+                                {loginTxt}
+
+                            </div>
+                            <div className='col-md-4 pr-4 text-center pt-2' style={{ color: 'white' }}>
+                                <p><span className='pr-2'><FontAwesomeIcon icon={faUser} /></span>{localStorage.username}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -331,10 +339,10 @@ class article extends Component {
                                 btnText='Create'
                             />
 
-                        
+
                             {
                                 this.state.data.map(ele =>
-                                    <div className="col-md-6 mb-4" key={ele.articleId} style={{display: 'flex'}}>
+                                    <div className="col-md-6 mb-4" key={ele.articleId} style={{ display: 'flex' }}>
                                         <div className="col-md-12 p-1 text-center" onClick={() => this.clickedArticleHandler(ele)}
                                             style={{ borderRadius: 10 + 'px', background: 'grey', color: 'black', cursor: 'pointer', boxShadow: '10px 10px 8px lightgrey' }}>
                                             <h4 className="pt-2">
@@ -349,7 +357,7 @@ class article extends Component {
 
                                 )
                             }
-                            
+
 
 
                             <div className="col-md-12 p-1 mt-5">
