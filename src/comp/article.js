@@ -310,7 +310,7 @@ class article extends Component {
                     {/* Menu bar */}
                     {this.menuBar()}
 
-                    <div className="col-md-12" style={{ padding: '50px', paddingTop: '100px' }}>
+                    <div className="col-md-12" style={{ padding: '50px', paddingTop: '100px', background: 'grey' }}>
                         <div className='row'>
                             {/* <ToastComp show={this.state.showToast} close={this.closeToast.bind(this)} msg={this.state.toastMsg} /> */}
 
@@ -344,7 +344,7 @@ class article extends Component {
                                 this.state.data.map(ele =>
                                     <div className="col-md-6 mb-4" key={ele.articleId} style={{ display: 'flex' }}>
                                         <div className="col-md-12 p-1 text-center" onClick={() => this.clickedArticleHandler(ele)}
-                                            style={{ borderRadius: 10 + 'px', background: 'grey', color: 'black', cursor: 'pointer', boxShadow: '10px 10px 8px lightgrey' }}>
+                                            style={{ borderRadius: 10 + 'px', background: 'white', color: 'black', cursor: 'pointer', boxShadow: '10px 10px 8px rgb(72,72,72)' }}>
                                             <h4 className="pt-2">
                                                 {ele.title}
 
